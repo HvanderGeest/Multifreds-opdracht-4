@@ -78,5 +78,13 @@ public class DistributionAgent extends UntypedActor {
 		}
 		
 	}
+	
+	@Override
+	public void postStop() throws Exception {
+		//checks to see if the maps are kept clean properly
+		assert customerRequests.isEmpty(): "there where still customer request on termination";
+		assert pendingReservations.isEmpty(): "there where still pending reservations on termination";
+		super.postStop();
+	}
 
 }

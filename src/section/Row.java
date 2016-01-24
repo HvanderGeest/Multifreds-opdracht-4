@@ -56,6 +56,8 @@ public class Row {
 			if(numberInArow == nrOfPersons){
 				//reservation
 				for(Integer i : seatNumbers){
+					assert !seats.get(i).isReserved(): "this seat is supposed to be free";
+					assert !seats.get(i).IsPayed(): "this seat isn't supposed to be payed for";
 					seats.get(i).reserve(customerId);
 				}
 				return seatNumbers;

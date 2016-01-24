@@ -30,8 +30,9 @@ public class TerminationListenerAgent extends UntypedActor {
 					Thread.sleep(1000); // allows the final customers to receive their reservation
 					getContext().system().terminate();
 					
-					//TODO: log everybody done
 				}
+			} else {
+				unhandled(msg);
 			}
 		} else {
 			unhandled(msg);

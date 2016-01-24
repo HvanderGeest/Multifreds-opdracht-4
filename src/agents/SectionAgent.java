@@ -16,7 +16,6 @@ public class SectionAgent extends UntypedActor {
 	private LoggingAdapter log = Logging.getLogger(getContext().system(), this);
 	
 	
-	//TODO: tickes van gereserveerd naar verkocht;
 	public SectionAgent(String sectionName){
 		this.sectionName = sectionName;
 		mySection = new Section();

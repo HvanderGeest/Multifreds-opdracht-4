@@ -6,6 +6,7 @@ import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
+import config.AplConfig;
 import messages.Reservation;
 import messages.ReservationStatus;
 import messages.TicketRequest;
@@ -71,6 +72,7 @@ public class CustomerAgent extends UntypedActor {
 			assert myReservation != null: "given reservation is null";
 			assert myReservation.getSeatNumbers().size() == myDesiredNumberOfTickets: "to many or to les seats where reserved";
 			assert myReservation.getSectionName().equals(myDesiredSection): "reservation is not for the right section";
+			assert myReservation.getUserId() == myId: "this reservation is for another user";
 			log.info(myId+ " received reservation: "+myReservation.toString());
 			terminationListener.tell(DONE, getSelf());
 		} else {
@@ -90,7 +92,7 @@ public class CustomerAgent extends UntypedActor {
 	public ReservationStatusCode payOrCancel(){
 		Random r = new Random();
 		int result = r.nextInt(100-1) + 1;
-		if(result < 50){
+		if(result < AplConfig.CANCEL_CHANCE_PERCENTAGE){
 			return ReservationStatusCode.STATUS_CANCELLED_RESERVATION;
 		} else {
 			return ReservationStatusCode.STATUS_TICKETS_BOUGHT;
